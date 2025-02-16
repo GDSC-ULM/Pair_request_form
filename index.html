@@ -28,7 +28,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
         }
         h2, h3 {
             text-align: center;
@@ -41,6 +41,7 @@
             justify-content: center;
             align-items: center;
             margin-bottom: 1rem;
+            flex-wrap: wrap;
         }
         .gdsc-logo img {
             height: 30px;
@@ -108,6 +109,26 @@
             font-size: 1rem;
             padding: 0;
         }
+        .skill-input-container {
+            position: relative;
+        }
+        .skill-input-container input {
+            padding-right: 40px; /* Space for the add button */
+        }
+        .add-skill-btn {
+            position: absolute;
+            right: 10px;
+            top: 40%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gdsc-blue);
+        }
+        .add-skill-btn:hover {
+            color: #3367d6;
+        }
         #loadingOverlay {
             display: none;
             position: fixed;
@@ -136,6 +157,35 @@
             margin-top: 10px;
             font-weight: bold;
         }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            h3 {
+                font-size: 1.2rem;
+            }
+            .gdsc-logo img {
+                height: 25px;
+            }
+            .gdsc-logo span {
+                font-size: 20px;
+            }
+            input[type="text"], input[type="email"], select {
+                font-size: 14px;
+            }
+            input[type="submit"] {
+                font-size: 0.9rem;
+                padding: 0.5rem 1rem;
+            }
+            .skill-tag {
+                font-size: 0.75rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -150,7 +200,7 @@
         <h2>Didn't find a team?</h2>
         <h3>Fill out this form, and we'll match you with the best one!</h3>
 
-        <form id="gdscForm">
+        <form id="gdscForm" name="google-sheet" method="post">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
 
@@ -159,7 +209,7 @@
 
             <label for="classification">Classification:</label>
             <select id="classification" name="classification" required>
-                <option value="">Select Classification</option>
+                <option value="Not Mentioned">Select Classification</option>
                 <option value="Freshman">Freshman</option>
                 <option value="Sophomore">Sophomore</option>
                 <option value="Junior">Junior</option>
@@ -167,7 +217,10 @@
             </select>
 
             <label for="skillInput">Skills:</label>
-            <input type="text" id="skillInput" placeholder="Type a skill and press Enter">
+            <div class="skill-input-container">
+                <input type="text" id="skillInput" placeholder="Add your skill">
+                <button type="button" class="add-skill-btn" onclick="addSkillFromInput()">➕</button>
+            </div>
             <div id="skillsContainer" class="skills-container"></div>
             <input type="hidden" id="skills" name="skills">
 
@@ -188,15 +241,9 @@
         const skillsHiddenInput = document.getElementById('skills');
         const skillInput = document.getElementById('skillInput');
         const skills = new Set();
-        
-        skillInput.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                addSkill(this.value.trim());
-            }
-        });
 
-        function addSkill(skill) {
+        function addSkillFromInput() {
+            const skill = skillInput.value.trim();
             if (skill && !skills.has(skill)) {
                 skills.add(skill);
                 updateSkillsInput();
@@ -212,20 +259,20 @@
             skills.delete(skill);
             updateSkillsInput();
             skillsContainer.innerHTML = '';
-            skills.forEach(addSkill);
+            skills.forEach(addSkillFromInput);
         }
 
         function updateSkillsInput() {
             skillsHiddenInput.value = Array.from(skills).join(',');
         }
 
-        form.addEventListener('submit', function(event) {
+        form.addEventListener('submit', function(e) {
             event.preventDefault();
             document.getElementById('loadingOverlay').style.display = 'flex';
 
             const formData = new FormData(form);
-            // Replace 'YOUR_SCRIPT_URL' with the actual Google Apps Script URL
-            fetch('https://script.google.com/macros/s/AKfycbxvep_eiWeNVHLIVdTAz_nwxkf4_GyaC8wJ0HdrfEp2ij_a88CnMs5ltR3MEBZgNnWeUA/exec', {
+            e.preventDefault();
+            fetch('https://script.google.com/macros/s/AKfycbxObKzshrYDBJYSM2_3bC949UEHgo-fQzxCqKbPoCygfq799p3KCmw_HK1CkjEKfOPp/exec', {
                 method: 'POST',
                 body: formData
             })

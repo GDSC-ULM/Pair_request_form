@@ -63,6 +63,49 @@
         .btn:hover {
             background-color: #3367d6;
         }
+        .cta-section {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cta-text {
+    margin: 0;
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.cta-icon {
+    font-size: 1.5rem;
+    color: var(--gdsc-blue);
+}
+
+.cta-link {
+    color: var(--gdsc-blue);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    background-color: rgba(66, 133, 244, 0.1);
+    transition: all 0.3s ease;
+}
+
+.cta-link:hover {
+    background-color: rgba(66, 133, 244, 0.2);
+    text-decoration: underline;
+}
+
+
     </style>
 </head>
 <body>
@@ -73,6 +116,16 @@
         <h2>Successfully Submitted! 🎉</h2>
         <p>One of our GDSC members will pair you with the best team in the Hackathon.</p>
         <p>Please stay updated on your email for further details. Thank you!</p>
+
+        <div class="cta-section">
+            <p class="cta-text">
+                <span class="cta-icon">👥</span>
+                Looking for participants to join your team? 
+                <a href="list.html" target="_blank">
+                    <span class="cta-link">Explore the list now!</span>
+                </a>
+            </p>
+        </div>
     </div>
 </body>
 </html>
