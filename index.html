@@ -236,61 +236,72 @@
     </div>
 
     <script>
-        const form = document.getElementById('gdscForm');
-        const skillsContainer = document.getElementById('skillsContainer');
-        const skillsHiddenInput = document.getElementById('skills');
-        const skillInput = document.getElementById('skillInput');
-        const skills = new Set();
+    const form = document.getElementById('gdscForm');
+const skillsContainer = document.getElementById('skillsContainer');
+const skillsHiddenInput = document.getElementById('skills');
+const skillInput = document.getElementById('skillInput');
+const skills = new Set();
 
-        function addSkillFromInput() {
-            const skill = skillInput.value.trim();
-            if (skill && !skills.has(skill)) {
-                skills.add(skill);
-                updateSkillsInput();
-                const skillTag = document.createElement('div');
-                skillTag.className = 'skill-tag';
-                skillTag.innerHTML = `${skill} <button type="button" onclick="removeSkill('${skill}')">&times;</button>`;
-                skillsContainer.appendChild(skillTag);
-                skillInput.value = '';
-            }
-        }
+// Function to add a skill from the input field
+function addSkillFromInput() {
+    const skill = skillInput.value.trim();
+    if (skill && !skills.has(skill)) {
+        skills.add(skill);
+        updateSkillsInput();
+        const skillTag = document.createElement('div');
+        skillTag.className = 'skill-tag';
+        skillTag.innerHTML = `${skill} <button type="button" onclick="removeSkill('${skill}')">&times;</button>`;
+        skillsContainer.appendChild(skillTag);
+        skillInput.value = '';
+    }
+}
 
-        function removeSkill(skill) {
-            skills.delete(skill);
-            updateSkillsInput();
-            skillsContainer.innerHTML = '';
-            skills.forEach(addSkillFromInput);
-        }
+// Function to remove a skill
+function removeSkill(skill) {
+    skills.delete(skill);
+    updateSkillsInput();
+    skillsContainer.innerHTML = '';
+    skills.forEach(addSkillFromInput);
+}
 
-        function updateSkillsInput() {
-            skillsHiddenInput.value = Array.from(skills).join(',');
-        }
+// Function to update the hidden input with skills
+function updateSkillsInput() {
+    skillsHiddenInput.value = Array.from(skills).join(',');
+}
 
-        form.addEventListener('submit', function(e) {
-            event.preventDefault();
-            document.getElementById('loadingOverlay').style.display = 'flex';
+// Prevent form submission on Enter key in the skills input field
+skillInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Prevent form submission
+        addSkillFromInput(); // Add the skill instead
+    }
+});
 
-            const formData = new FormData(form);
-            e.preventDefault();
-            fetch('https://script.google.com/macros/s/AKfycbxObKzshrYDBJYSM2_3bC949UEHgo-fQzxCqKbPoCygfq799p3KCmw_HK1CkjEKfOPp/exec', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                window.location.href = 'success.html';
-                form.reset();
-                skills.clear();
-                skillsContainer.innerHTML = '';
-                updateSkillsInput();
-            })
-            .catch(error => {
-                alert('An error occurred. Please try again.');
-            })
-            .finally(() => {
-                document.getElementById('loadingOverlay').style.display = 'none';
-            });
-        });
+// Handle form submission
+form.addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent default form submission
+    document.getElementById('loadingOverlay').style.display = 'flex';
+
+    const formData = new FormData(form);
+    fetch('https://script.google.com/macros/s/AKfycbxObKzshrYDBJYSM2_3bC949UEHgo-fQzxCqKbPoCygfq799p3KCmw_HK1CkjEKfOPp/exec', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        window.location.href = 'success.html';
+        form.reset();
+        skills.clear();
+        skillsContainer.innerHTML = '';
+        updateSkillsInput();
+    })
+    .catch(error => {
+        alert('An error occurred. Please try again.');
+    })
+    .finally(() => {
+        document.getElementById('loadingOverlay').style.display = 'none';
+    });
+});
     </script>
 </body>
 </html>
