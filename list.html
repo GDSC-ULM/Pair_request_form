@@ -5,56 +5,130 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Displaying All Records</title>
   <style>
+    /* General Styles */
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f9;
+      background-color: #f4f7f6;
       color: #333;
+      line-height: 1.6;
     }
+
+    /* Header Styles */
     header {
-      margin-top: 20px;
-      background-color: #4285f4;
+      background: linear-gradient(135deg, #4285f4, #34a853);
       color: white;
-      padding: 20px;
+      padding: 40px 20px;
       text-align: center;
-      font-size: 24px;
-      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 0;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    /* Container Styles */
     .container {
       max-width: 1200px;
-      margin: 20px auto;
+      margin: 40px auto;
       padding: 20px;
       background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      animation: slideUp 1s ease-in-out;
     }
+
+    /* Iframe Styles */
     iframe {
       width: 100%;
       height: 600px;
       border: none;
       border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
+
+    /* Footer Styles */
     footer {
       text-align: center;
-      padding: 10px;
-      background-color: #4285f4;
+      padding: 20px;
+      background: linear-gradient(135deg, #34a853, #4285f4);
       color: white;
       position: fixed;
-      bottom: 10px;
+      bottom: 0;
       width: 100%;
+      box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .container {
+        margin: 20px;
+        padding: 15px;
+      }
+
+      iframe {
+        height: 400px;
+      }
+
+      footer p {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      iframe {
+        height: 300px;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    Find Your Team, Fuel Your Dreams – Where Connections Begin!
+    <h1>Find Your Team, Fuel Your Dreams – Where Connections Begin!</h1>
   </header>
   <div class="container">
     <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSYynNy_L47_1Gqe8K6myFZa_ry_kwEvr2Fyi3KTLDTuSvtddac5oWlnWSCQGwON7QpnXSNAkrQi5mg/pubhtml?widget=true&amp;headers=false"></iframe>
   </div>
   <footer>
-    &copy; 2025 GDSC@Hawkathon. All rights reserved.
+    <p>&copy; 2025 GDSC@Hawkathon. All rights reserved.</p>
   </footer>
 </body>
 </html>
